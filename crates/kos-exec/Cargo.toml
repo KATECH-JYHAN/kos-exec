@@ -15,7 +15,7 @@ comm-core = { path = "../../../comm/crates/comm-core" }
 kos-safety = { path = "../../../safety/crates/kos-safety" }
 sha2 = "0.10"
 libc = "0.2"
-# iceoryx2 백엔드 (선택). 1.0 이전이라 API 변경이 잦아 정확한 버전으로 고정한다.
+# Optional iceoryx2 backend. Pinned to an exact version because its API changes often before 1.0.
 iceoryx2 = { version = "=0.10.0", optional = true }
 
 [features]

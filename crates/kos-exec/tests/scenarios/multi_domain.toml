@@ -1,5 +1,5 @@
-# Scenario 2: 다중 도메인 — ADAS(D) + IVI(QM) + Body(B)
-# 도메인 간 독립 앱 + 스케줄 혼합
+# Scenario 2: multiple domains — ADAS (D) + IVI (QM) + Body (B)
+# Independent apps across domains with mixed schedules
 
 [[domain]]
 id = "adas"

@@ -1,5 +1,5 @@
-# Scenario 3: 복잡한 의존성 체인
-# A → B, A → C, B → D, C → D (다이아몬드 의존성)
+# Scenario 3: complex dependency chain
+# A → B, A → C, B → D, C → D (diamond dependency)
 
 [[domain]]
 id = "sys"

@@ -1,5 +1,5 @@
-# Scenario 1: ADAS 파이프라인
-# Camera → Fusion → LKA 의존성 체인, 전부 periodic, ASIL-D
+# Scenario 1: ADAS pipeline
+# Camera → Fusion → LKA dependency chain, all periodic, ASIL-D
 
 [[domain]]
 id = "adas"
