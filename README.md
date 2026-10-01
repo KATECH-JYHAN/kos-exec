@@ -15,8 +15,8 @@ Clone [KOS-comm](https://github.com/KATECH-JYHAN/kos-comm) and [KOS-safety](http
 
 ```bash
 git clone https://github.com/KATECH-JYHAN/kos-exec.git
-git clone https://github.com/KATECH-JYHAN/kos-comm.git comm
-git clone https://github.com/KATECH-JYHAN/kos-safety.git safety
+git clone https://github.com/KATECH-JYHAN/kos-comm.git
+git clone https://github.com/KATECH-JYHAN/kos-safety.git
 cd kos-exec
 ```
 

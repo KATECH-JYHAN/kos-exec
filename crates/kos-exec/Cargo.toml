@@ -11,8 +11,8 @@ nix = { version = "0.29", features = ["sched", "signal", "process"] }
 crossbeam-channel = "0.5"
 serde = { version = "1", features = ["derive"] }
 toml = "0.8"
-comm-core = { path = "../../../comm/crates/comm-core" }
-kos-safety = { path = "../../../safety/crates/kos-safety" }
+comm-core = { path = "../../../kos-comm/crates/comm-core" }
+kos-safety = { path = "../../../kos-safety/crates/kos-safety" }
 sha2 = "0.10"
 libc = "0.2"
 # Optional iceoryx2 backend. Pinned to an exact version because its API changes often before 1.0.
