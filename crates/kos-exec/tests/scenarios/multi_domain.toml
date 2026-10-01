@@ -1,0 +1,81 @@
+# Scenario 2: 다중 도메인 — ADAS(D) + IVI(QM) + Body(B)
+# 도메인 간 독립 앱 + 스케줄 혼합
+
+[[domain]]
+id = "adas"
+asil = "D"
+cores = [0, 1]
+
+[[domain]]
+id = "ivi"
+asil = "QM"
+cores = [2, 3]
+
+[[domain]]
+id = "body"
+asil = "B"
+cores = [4]
+
+# ADAS: periodic camera
+[[app]]
+id = "adas.camera"
+binary = "sleep"
+args = ["999"]
+domain = "adas"
+priority = "critical"
+
+[app.schedule]
+type = "periodic"
+period_ms = 10
+
+# IVI: event-driven media player
+[[app]]
+id = "ivi.media"
+binary = "sleep"
+args = ["999"]
+domain = "ivi"
+priority = "low"
+
+[app.schedule]
+type = "event"
+trigger = "signal:media_play"
+
+# IVI: event-driven navigation
+[[app]]
+id = "ivi.navi"
+binary = "sleep"
+args = ["999"]
+domain = "ivi"
+priority = "normal"
+
+[app.schedule]
+type = "event"
+trigger = "signal:navi_start"
+
+# Body: cron-based battery monitor
+[[app]]
+id = "body.battery"
+binary = "sleep"
+args = ["999"]
+domain = "body"
+priority = "normal"
+
+[app.schedule]
+type = "cron"
+expr = "0 3 * * *"
+
+# Body: periodic door controller
+[[app]]
+id = "body.door"
+binary = "sleep"
+args = ["999"]
+domain = "body"
+priority = "high"
+
+[app.schedule]
+type = "periodic"
+period_ms = 50
+
+[app.restart]
+strategy = "cold"
+max_retries = 2

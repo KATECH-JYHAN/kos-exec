@@ -1,0 +1,16 @@
+[package]
+name = "kos-exec-cli"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+authors = ["Jun-young Han <jyhan@katech.re.kr>"]
+repository = "https://github.com/KATECH-JYHAN/kos-exec"
+
+[[bin]]
+name = "kos"
+path = "src/main.rs"
+
+[dependencies]
+kos-exec = { path = "../kos-exec" }
+clap = { version = "4", features = ["derive"] }
+libc = "0.2"

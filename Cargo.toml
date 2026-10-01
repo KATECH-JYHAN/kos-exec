@@ -1,0 +1,7 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/kos-exec",
+    "crates/kos-exec-ffi",
+    "crates/kos-exec-cli",
+]

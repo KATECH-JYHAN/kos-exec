@@ -1,0 +1,58 @@
+# Scenario 1: ADAS 파이프라인
+# Camera → Fusion → LKA 의존성 체인, 전부 periodic, ASIL-D
+
+[[domain]]
+id = "adas"
+asil = "D"
+cores = [0, 1]
+
+[[app]]
+id = "adas.camera"
+binary = "sleep"
+args = ["999"]
+domain = "adas"
+priority = "critical"
+
+[app.schedule]
+type = "periodic"
+period_ms = 10
+
+[app.restart]
+strategy = "cold"
+max_retries = 5
+
+[[app]]
+id = "adas.fusion"
+binary = "sleep"
+args = ["999"]
+domain = "adas"
+depends_on = ["adas.camera"]
+priority = "critical"
+
+[app.schedule]
+type = "periodic"
+period_ms = 20
+
+[app.restart]
+strategy = "cold"
+max_retries = 3
+
+[[app]]
+id = "adas.lka"
+binary = "sleep"
+args = ["999"]
+domain = "adas"
+depends_on = ["adas.fusion"]
+priority = "critical"
+
+[app.schedule]
+type = "periodic"
+period_ms = 20
+
+[app.restart]
+strategy = "cold"
+max_retries = 3
+
+[app.params]
+steering_gain = "1.2"
+max_angle = "35.0"

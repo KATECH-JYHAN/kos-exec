@@ -1,0 +1,54 @@
+# Scenario 3: 복잡한 의존성 체인
+# A → B, A → C, B → D, C → D (다이아몬드 의존성)
+
+[[domain]]
+id = "sys"
+asil = "B"
+cores = [0, 1, 2, 3]
+
+[[app]]
+id = "sys.driver"
+binary = "sleep"
+args = ["999"]
+domain = "sys"
+priority = "critical"
+
+[app.schedule]
+type = "periodic"
+period_ms = 5
+
+[[app]]
+id = "sys.logger"
+binary = "sleep"
+args = ["999"]
+domain = "sys"
+depends_on = ["sys.driver"]
+priority = "high"
+
+[app.schedule]
+type = "periodic"
+period_ms = 50
+
+[[app]]
+id = "sys.monitor"
+binary = "sleep"
+args = ["999"]
+domain = "sys"
+depends_on = ["sys.driver"]
+priority = "high"
+
+[app.schedule]
+type = "periodic"
+period_ms = 100
+
+[[app]]
+id = "sys.dashboard"
+binary = "sleep"
+args = ["999"]
+domain = "sys"
+depends_on = ["sys.logger", "sys.monitor"]
+priority = "normal"
+
+[app.schedule]
+type = "event"
+trigger = "signal:refresh"

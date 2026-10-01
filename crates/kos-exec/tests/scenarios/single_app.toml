@@ -1,0 +1,20 @@
+# Scenario 4: 단일 앱 — 최소 구성 확인
+
+[[domain]]
+id = "test"
+asil = "QM"
+cores = [0]
+
+[[app]]
+id = "test.hello"
+binary = "sleep"
+args = ["999"]
+domain = "test"
+
+[app.schedule]
+type = "periodic"
+period_ms = 1000
+
+[app.params]
+message = "hello world"
+count = "10"
