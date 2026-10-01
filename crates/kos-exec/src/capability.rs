@@ -50,10 +50,20 @@ pub fn ensure_delegated() -> std::io::Result<bool> {
         return Ok(false);
     }
 
-    if Command::new("systemd-run").arg("--version").output().is_err() {
+    let mode = scope_args(unsafe { libc::getuid() });
+    let usable = Command::new("systemd-run")
+        .args(&mode)
+        .args(["--quiet", "--", "true"])
+        .stdout(std::process::Stdio::null())
+        .stderr(std::process::Stdio::null())
+        .status()
+        .map(|s| s.success())
+        .unwrap_or(false);
+    if !usable {
         eprintln!(
-            "[kos-exec] systemd-run not available. \
-             cgroup features will be unavailable."
+            "[kos-exec] WARNING: cannot create a systemd scope (systemd-run {}). \
+             cgroup features will be unavailable; run kos as a systemd service with Delegate=yes.",
+            mode.join(" ")
         );
         return Ok(false);
     }
@@ -64,8 +74,7 @@ pub fn ensure_delegated() -> std::io::Result<bool> {
     eprintln!("[kos-exec] cgroup delegation not available, re-executing with systemd-run...");
 
     let mut cmd = Command::new("systemd-run");
-    cmd.arg("--user")
-        .arg("--scope")
+    cmd.args(&mode)
         .arg("-p").arg("Delegate=yes")
         .arg("--")
         .arg(&exe)
@@ -79,6 +88,14 @@ pub fn ensure_delegated() -> std::io::Result<bool> {
     }
 
     Err(cmd.exec())
+}
+
+fn scope_args(uid: libc::uid_t) -> Vec<&'static str> {
+    if uid == 0 {
+        vec!["--scope"]
+    } else {
+        vec!["--user", "--scope"]
+    }
 }
 
 fn probe_rt_priority() -> bool {
@@ -157,4 +174,15 @@ fn probe_cgroup_delegate() -> bool {
         }
     }
     false
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn root_uses_system_scope_and_users_use_user_scope() {
+        assert_eq!(scope_args(0), vec!["--scope"]);
+        assert_eq!(scope_args(1000), vec!["--user", "--scope"]);
+    }
 }
